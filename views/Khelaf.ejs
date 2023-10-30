@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/Styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2&family=Reem+Kufi:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+
+
+
+</head>
+<body>
+    
+</body>
+</html>
+
+
+<body>
+
+    <form action="/noOfKelaf" method="POST">
+
+        <div class="noOfKelaf">
+
+            <div class="noOfKelafatH">
+                <h2 class="noOfKelafat">عدد الخلافات</h2>
+            </div>
+
+                <div class="buttonsNoOf">
+                    <button class="buttonNoOf" type="submit" name="button" value="remove">-</button>
+                    <button class="buttonNoOf" type="submit" name="button" value="add">+</button>           
+                </div>
+        </div>
+
+    </form>
+
+    <form id="Forms" action="/submit" method="POST">
+
+
+    <div class="khelaf_container">
+        
+        <div class="KhelafA KhelafC">
+      
+      
+            <%for(let i=0; i < noOfKelafat ; i++){%>
+
+                <div class="KhelafBox">
+
+
+
+                    <div>
+                        <label class="KhelafTitle KhelafItem"> الخلاف <%= i+1 %></label>
+                    </div>
+
+                    <div class="KhelafBab">
+                        <select class="KhelafBabSelect KhelafItem" name="Bab" id="Bab<%= i+1 %>" placeholder="باب الخلاف" required="required" onchange='babchange( id )'>
+                            <option value="" disabled selected hidden>الباب</option>
+
+                            <% for(var count = 0; count < Bab_data.length; count++) { %>
+                                <option value="<%= Bab_data[count].BabID %>"><%= Bab_data[count].BabName %></option>
+                            <% } %>
+                        </select>
+                    </div>
+
+                    
+                    <div>
+                        <select class="KhelafType KhelafItem" name="Khelaf" id="Khelaf<%= i+1 %>" required="required">
+                            <option value="" disabled selected hidden>الخلاف</option>
+                        </select>
+                    </div>
+
+                    <div >
+                        <input class="KhelafWord KhelafItem" name="word" id="word<%= i+1 %>" type="text" placeholder="الكلمة (اختياري..)" >
+                    </div>
+
+
+
+                </div>
+
+
+            <%}%>
+
+            
+
+
+
+
+
+
+
+
+
+
+
+        </div>    
+        
+        
+        
+        <div class="KhelafA KhelafB">
+
+
+
+
+
+
+            <div class="Quraa">
+                <h2 class="Arrwah">الرواة</h2>
+
+                <div class="select_buttons"> 
+                    <input class="select_button" type="button" onclick='selects()' value="تحديد الكل"/>  
+                    <input class="select_button" type="button" onclick='deSelect()' value="مسح التحديد"/>
+                </div>  
+
+                <div id="check">
+
+                    <div id="check">
+                        <%for(let i=0; i<rwah.length; i++){%>
+                            <div class="labels">
+                                <input type="checkbox" id=  "A" name="RawyID" value="<%=rwah[i].RawyID%>">
+                                <label class="rwahLable" for="A"> <%=rwah[i].RawyName%></label>
+                            </div>
+                        <%}%>
+                    </div>
+
+
+                </div>
+    
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+    <div class="Search">
+
+
+        <input class="SearchButton" type="submit" value="بحث" />
+    </div>
+
+    
+</form>
+
+</body>
+
+
+</html>
+
+
+
+<script>
+
+    function _(element)
+    {
+        return document.getElementById(element);
+    }
+    
+    function fetch_data(parent_element, child_element, type)
+    {
+        fetch('/get_data?type='+type+'&parent_value='+parent_element.value+'').then(function(response){
+            return response.json();
+        }).then(function(responseData){
+    
+            var html = '';
+    
+            if(type == 'load_Khelaf')
+            {
+                html = '<option value="" disabled selected hidden>الخلاف</option>';
+            }
+    
+
+    
+            for(var count = 0; count < responseData.length; count++)
+            {
+                html += `<option value= '{"KhelafID": "`+ responseData[count].KhelafID +`", "KhelafAName": "`+responseData[count].KhelafAName+`" , "KhelafEName": "`+responseData[count].KhelafEName+`"}' > `+responseData[count].KhelafAName+` </option>`
+            }
+    
+            child_element.innerHTML = html;
+        });
+    }
+    
+
+
+
+
+        function babchange(Babid){
+                var Khelaf = 'Khelaf'+ Babid.substring(3);    
+                fetch_data(_(Babid), _(Khelaf), 'load_Khelaf');
+                
+        };
+
+
+
+    
+    </script>
+    
+    
+    
+    

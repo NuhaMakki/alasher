@@ -28,7 +28,7 @@ if (err) throw err;
 console.log("Connected!");
 });
 
-var sqlRwah = "SELECT RawyID, RawyName FROM `0-3rwaah` WHERE RawyID != 12;"
+var sqlRwah = "SELECT DISTINCT RawyID, RawyName FROM `0-3rwaah` WHERE RawyID != 12;"
 let rwah=[];
 database.query(sqlRwah, function (err, result) {
   if (err) throw err;

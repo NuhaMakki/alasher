@@ -17,10 +17,10 @@ app.use(express.static("public"));
 //--------------------------- database connecte & query ---------------------------
 
 var database = mysql.createConnection({
-  host: "bidaazao1nlrlvinmdcr-mysql.services.clever-cloud.com",
-  database : "bidaazao1nlrlvinmdcr",
-  user: "uvqolx3wh67olxir",
-  password: "DLtbVarwhKt2rrCmyKGL"
+  host: "bhrzrnrikyzx2thrxvnu-mysql.services.clever-cloud.com",
+  database : "bhrzrnrikyzx2thrxvnu",
+  user: "uufat575x2amdt21",
+  password: "5cvx0FoDW20NzuXuQtgd"
 });
 
 database.connect(function(err) {
